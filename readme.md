@@ -4,7 +4,7 @@ A peer-to-peer anonymous data sharing system for decentralized clinics with ARIM
 
 ## 🏗️ System Architecture
 
-'''
+"""
 ┌─────────────┐     ┌─────────────┐     ┌─────────────┐
 │  Clinic     │     │  Clinic     │     │  Clinic     │
 │  Node 1     │     │  Node 2     │     │  Node 3     │
@@ -26,7 +26,7 @@ A peer-to-peer anonymous data sharing system for decentralized clinics with ARIM
                     │     +       │
                     │   React UI  │
                     └─────────────┘
-'''
+"""
 
 ## ✨ Features
 
@@ -48,20 +48,20 @@ A peer-to-peer anonymous data sharing system for decentralized clinics with ARIM
 
 ### 1. Install Dependencies
 
-```bash
+"""bash
 # Create virtual environment
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install Python packages
 pip install -r requirements.txt
-```
+"""
 
 ### 2. File Structure
 
 Create the following files in your project directory:
 
-'''
+"""
 clinic-network/
 ├── aggregator_server.py      # Aggregator with ARIMA
 ├── clinic_node.py             # Clinic node implementation
@@ -70,14 +70,14 @@ clinic-network/
 ├── requirements.txt           # Python dependencies
 └── frontend/
     └── Dashboard.jsx          # React dashboard component
-'''
+"""
 
 ### 3. Launch the System
 
-'''bash
+"""bash
 # Start all services (aggregator + 3 nodes)
 python run_system.py
-'''
+"""
 
 This will:
 - Start the aggregator on port 8000
@@ -89,10 +89,10 @@ This will:
 
 In a separate terminal:
 
-'''bash
+"""bash
 # Test all API endpoints
 python test_api.py
-'''
+"""
 
 ## 🔌 API Endpoints
 
@@ -100,91 +100,91 @@ python test_api.py
 
 | Endpoint | Method | Description |
  |----------|--------|-------------|
-| `/receive_data` | POST | Receive anonymous data from nodes |
-| `/stats` | GET | Get aggregated statistics |
-| `/forecast/{metric}?periods=7` | GET | Get ARIMA forecast |
-| `/map_data` | GET | Get geographic distribution |
-| `/health` | GET | Health check |
+| "/receive_data" | POST | Receive anonymous data from nodes |
+| "/stats" | GET | Get aggregated statistics |
+| "/forecast/{metric}?periods=7" | GET | Get ARIMA forecast |
+| "/map_data" | GET | Get geographic distribution |
+| "/health" | GET | Health check |
 
 ### Clinic Nodes (Ports 8001-8003)
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
-| `/patient_record` | POST | Add patient symptom record |
-| `/stats` | GET | Get node statistics |
-| `/sync` | POST | Manually sync with aggregator |
+| "/patient_record" | POST | Add patient symptom record |
+| "/stats" | GET | Get node statistics |
+| "/sync" | POST | Manually sync with aggregator |
 
 ## 📊 Using the API
 
 ### Add Patient Record
 
-'''bash
+"""bash
 curl -X POST http://localhost:8001/patient_record \
   -H "Content-Type: application/json" \
-  -d '{
+  -d "{
     "symptoms": ["fever", "cough"],
     "severity": 7
-  }'
-'''
+  }"
+"""
 
 ### Get Aggregated Stats
 
-'''bash
+"""bash
 curl http://localhost:8000/stats
-'''
+"""
 
 ### Get Patient Volume Forecast
 
-```bash
+"""bash
 curl http://localhost:8000/forecast/patient_count?periods=7
-```
+"""
 
 ### Get Risk Score Forecast
 
-```bash
+"""bash
 curl http://localhost:8000/forecast/avg_risk_score?periods=7
-```
+"""
 
 ## 🎨 Frontend Setup
 
 ### React Integration
 
 1. Create a React app:
-```bash
+"""bash
 npx create-react-app clinic-dashboard
 cd clinic-dashboard
-```
+"""
 
 2. Install dependencies:
-```bash
+"""bash
 npm install recharts lucide-react
-```
+"""
 
-3. Copy the Dashboard component to `src/Dashboard.jsx`
+3. Copy the Dashboard component to "src/Dashboard.jsx"
 
-4. Update `src/App.js`:
-```javascript
-import Dashboard from './Dashboard';
+4. Update "src/App.js":
+"""javascript
+import Dashboard from "./Dashboard";
 
 function App() {
   return <Dashboard />;
 }
 
 export default App;
-```
+"""
 
 5. Start the development server:
-```bash
+"""bash
 npm start
-```
+"""
 
-The dashboard will be available at `http://localhost:3000`
+The dashboard will be available at "http://localhost:3000"
 
 ### Standalone HTML (Alternative)
 
 For testing without React setup, you can access the aggregator API directly:
 
-```html
+"""html
 <!DOCTYPE html>
 <html>
 <head>
@@ -197,16 +197,16 @@ For testing without React setup, you can access the aggregator API directly:
     
     <script>
         // Fetch and display data
-        fetch('http://localhost:8000/stats')
+        fetch("http://localhost:8000/stats")
             .then(r => r.json())
             .then(data => {
-                document.getElementById('stats').innerHTML = 
-                    `<h2>Patients: ${data.total_patients}</h2>`;
+                document.getElementById("stats").innerHTML = 
+                    "<h2>Patients: ${data.total_patients}</h2>";
             });
     </script>
 </body>
 </html>
-```
+"""
 
 ## 🔐 Privacy & Security
 
@@ -214,19 +214,19 @@ For testing without React setup, you can access the aggregator API directly:
 
 Each clinic node applies differential privacy before sending data:
 
-```python
+"""python
 # Laplace noise is added to numerical values
 epsilon = 0.5  # Privacy budget
 sensitivity = 1.0
 noise = np.random.laplace(0, sensitivity / epsilon)
 noisy_value = original_value + noise
-```
+"""
 
 ### Data Anonymization
 
 - No personally identifiable information (PII) is stored
 - Data is hashed using SHA-256 for integrity
-- Nodes cannot see each other's raw data
+- Nodes cannot see each other"s raw data
 - Only aggregated statistics are available
 
 ### Communication Security
@@ -267,24 +267,24 @@ For production, integrate with:
 
 ### Manual Testing
 
-```bash
+"""bash
 # Add test data to node 1
 curl -X POST http://localhost:8001/patient_record \
   -H "Content-Type: application/json" \
-  -d '{"symptoms": ["fever", "cough"], "severity": 8}'
+  -d "{"symptoms": ["fever", "cough"], "severity": 8}"
 
 # Check aggregator received it
 curl http://localhost:8000/stats
 
 # Get forecast
 curl http://localhost:8000/forecast/patient_count
-```
+"""
 
 ### Automated Testing
 
-```bash
+"""bash
 python test_api.py
-```
+"""
 
 Tests include:
 - Node patient record creation
@@ -297,31 +297,31 @@ Tests include:
 
 ### Node Locations
 
-Edit `clinic_node.py` to change node coordinates:
+Edit "clinic_node.py" to change node coordinates:
 
-```python
+"""python
 node_configs = {
     "node1": {"lat": 30.7333, "lon": 76.7794, "port": 8001},
     "node2": {"lat": 28.7041, "lon": 77.1025, "port": 8002},
     "node3": {"lat": 19.0760, "lon": 72.8777, "port": 8003},
 }
-```
+"""
 
 ### Privacy Budget
 
-Adjust epsilon in `clinic_node.py`:
+Adjust epsilon in "clinic_node.py":
 
-```python
+"""python
 epsilon = 0.5  # Lower = more privacy, less accuracy
-```
+"""
 
 ### ARIMA Parameters
 
-Modify in `aggregator_server.py`:
+Modify in "aggregator_server.py":
 
-```python
+"""python
 model = ARIMA(time_series, order=(1, 1, 1))  # (p, d, q)
-```
+"""
 
 ## 📝 Data Flow
 
@@ -353,13 +353,13 @@ For production deployment:
 
 ### Nodes not connecting to aggregator
 
-```bash
+"""bash
 # Check if aggregator is running
 curl http://localhost:8000/health
 
 # Check node status
 curl http://localhost:8001/stats
-```
+"""
 
 ### ARIMA forecast errors
 
@@ -371,7 +371,7 @@ curl http://localhost:8001/stats
 
 Frontend and backend on different ports may cause CORS issues. The code includes CORS middleware, but verify:
 
-```python
+"""python
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Restrict in production!
@@ -379,7 +379,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-```
+"""
 
 ## 📚 Dependencies
 
@@ -409,11 +409,11 @@ This is a prototype for educational purposes. Add appropriate license for produc
 
 ## 🎯 Next Steps
 
-1. **Run the system**: `python run_system.py`
-2. **Test the API**: `python test_api.py`
-3. **View dashboard**: Open React app at `http://localhost:3000`
+1. **Run the system**: "python run_system.py"
+2. **Test the API**: "python test_api.py"
+3. **View dashboard**: Open React app at "http://localhost:3000"
 4. **Add custom data**: Use curl or Postman to POST patient records
-5. **Explore forecasts**: Check `/forecast` endpoints for predictions
+5. **Explore forecasts**: Check "/forecast" endpoints for predictions
 
 ---
 
