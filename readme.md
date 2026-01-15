@@ -4,7 +4,7 @@ A peer-to-peer anonymous data sharing system for decentralized clinics with ARIM
 
 ## 🏗️ System Architecture
 
-```
+'''
 ┌─────────────┐     ┌─────────────┐     ┌─────────────┐
 │  Clinic     │     │  Clinic     │     │  Clinic     │
 │  Node 1     │     │  Node 2     │     │  Node 3     │
@@ -26,7 +26,7 @@ A peer-to-peer anonymous data sharing system for decentralized clinics with ARIM
                     │     +       │
                     │   React UI  │
                     └─────────────┘
-```
+'''
 
 ## ✨ Features
 
@@ -61,7 +61,7 @@ pip install -r requirements.txt
 
 Create the following files in your project directory:
 
-```
+'''
 clinic-network/
 ├── aggregator_server.py      # Aggregator with ARIMA
 ├── clinic_node.py             # Clinic node implementation
@@ -70,14 +70,14 @@ clinic-network/
 ├── requirements.txt           # Python dependencies
 └── frontend/
     └── Dashboard.jsx          # React dashboard component
-```
+'''
 
 ### 3. Launch the System
 
-```bash
+'''bash
 # Start all services (aggregator + 3 nodes)
 python run_system.py
-```
+'''
 
 This will:
 - Start the aggregator on port 8000
@@ -89,17 +89,17 @@ This will:
 
 In a separate terminal:
 
-```bash
+'''bash
 # Test all API endpoints
 python test_api.py
-```
+'''
 
 ## 🔌 API Endpoints
 
 ### Aggregator (Port 8000)
 
 | Endpoint | Method | Description |
-|----------|--------|-------------|
+ |----------|--------|-------------|
 | `/receive_data` | POST | Receive anonymous data from nodes |
 | `/stats` | GET | Get aggregated statistics |
 | `/forecast/{metric}?periods=7` | GET | Get ARIMA forecast |
@@ -118,20 +118,20 @@ python test_api.py
 
 ### Add Patient Record
 
-```bash
+'''bash
 curl -X POST http://localhost:8001/patient_record \
   -H "Content-Type: application/json" \
   -d '{
     "symptoms": ["fever", "cough"],
     "severity": 7
   }'
-```
+'''
 
 ### Get Aggregated Stats
 
-```bash
+'''bash
 curl http://localhost:8000/stats
-```
+'''
 
 ### Get Patient Volume Forecast
 
